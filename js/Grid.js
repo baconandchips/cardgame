@@ -30,7 +30,7 @@ export default class Grid {
                 image: cardType.image,
                 value: cardType.value,
                 name: cardType.name,
-                type: CardTypes.type
+                type: cardType.type
             });
             card.depth = 0;
             this.cards.push(card);

@@ -33,7 +33,6 @@ export default class MainScene extends Phaser.Scene {
     }
     create() {
         this.grid = new Grid({ scene: this, columns: 3, rows: 3 });
-        this.grid.cards[0].highlighted = true;
 
         this.player = new CardPlayer( {
             scene: this,
@@ -48,7 +47,46 @@ export default class MainScene extends Phaser.Scene {
                 // Snap back our original card!
                 this.player.x = this.player.originalX;
                 this.player.y = this.player.originalY;
+                if (this.highlighted) {
+                    switch(this.highlighted.cardtype) {
+                        // More types welcome here!
+                        case 'attack':
+                            this.player.attack(this.highlighted.value);
+                            this.highlighted.dead = true;
+                            break;
+                        case 'heal':
+                            this.player.health = Math.min(this.player.health + this.highlighted.value, this.player.maxHealth);
+                            break;
+                        case 'armor':
+                            this.player.armor = this.highlighted.value;
+                            break;
+                    }
+                }
             },
         });
+    }
+
+    update(time, delta) {
+        this.grid.cards[0].highlighted = false;
+        this.grid.cards[1].highlighted = false;
+        this.grid.cards[2].highlighted = false;
+        // Defining "highlighted" here makes it usable in onDragEnd!
+        this.highlighted = null;
+        let columnWidth = this.game.config.width / this.grid.columns;
+        if (this.player.y < 720) {
+            if (this.player.x < columnWidth) {
+                // First column!
+                this.grid.cards[0].highlighted = true;
+                this.highlighted = this.grid.cards[0];
+            } else if (this.player.x > columnWidth * 2) {
+                // Last column!
+                this.grid.cards[2].highlighted = true;
+                this.highlighted = this.grid.cards[2];
+            } else {
+                // Middle column!
+                this.grid.cards[1].highlighted = true;
+                this.highlighted = this.grid.cards[1];
+            } 
+        }
     }
 }
