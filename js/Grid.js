@@ -36,4 +36,36 @@ export default class Grid {
             this.cards.push(card);
         }
     }
+
+    addBackRow() {
+        // Called every time! We can avoid doing multiple times with check
+        if (this.cards.length >= this.columns * this.rows) return;
+        this.addCards(6); // Add starting at index 6!
+    }
+
+    fadeFrontRow() {
+        setTimeout(()=>{
+            // Destroy first three cards, and then bring everything following it down
+            this.cards.splice(0, 3).forEach(card => card.destroy());
+            this.cards.forEach(card=> {
+                // Tweens is a function for doing animation transitions
+                this.scene.tweens.add({
+                    targets: card,
+                    duration: 400,
+                    y: card.y + this.yOffset,
+                    onComplete: () => this.addBackRow()
+                });
+            });
+        }, 1000);
+
+        this.cards.slice(0, 3).forEach(card => {
+            if (!card.selected) {
+                this.scene.tweens.add({
+                    targets: card,
+                    alpha: 0,
+                    duration: 200
+                });
+            }
+        })
+    }
 }

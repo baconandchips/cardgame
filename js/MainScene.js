@@ -48,6 +48,7 @@ export default class MainScene extends Phaser.Scene {
                 this.player.x = this.player.originalX;
                 this.player.y = this.player.originalY;
                 if (this.highlighted) {
+                    this.highlighted.selected = true;
                     switch(this.highlighted.cardtype) {
                         // More types welcome here!
                         case 'attack':
@@ -61,6 +62,7 @@ export default class MainScene extends Phaser.Scene {
                             this.player.armor = this.highlighted.value;
                             break;
                     }
+                    this.grid.fadeFrontRow();
                 }
             },
         });
