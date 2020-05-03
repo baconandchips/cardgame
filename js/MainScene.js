@@ -33,6 +33,7 @@ export default class MainScene extends Phaser.Scene {
     }
     create() {
         this.grid = new Grid({ scene: this, columns: 3, rows: 3 });
+        this.grid.cards[0].highlighted = true;
 
         this.player = new CardPlayer( {
             scene: this,
