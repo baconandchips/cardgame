@@ -49,6 +49,8 @@ export default class MainScene extends Phaser.Scene {
                 this.player.x = this.player.originalX;
                 this.player.y = this.player.originalY;
                 if (this.highlighted) {
+                    // Aligns player card with the previously-absorved card
+                    this.player.originalX = this.player.x = this.highlighted.x; // Assigns third val to second val to first val
                     this.highlighted.selected = true;
                     switch(this.highlighted.cardtype) {
                         // More types welcome here!
@@ -82,7 +84,8 @@ export default class MainScene extends Phaser.Scene {
         // Defining "highlighted" here makes it usable in onDragEnd!
         this.highlighted = null;
         let columnWidth = this.game.config.width / this.grid.columns;
-        if (this.player.y < 720) {
+        let xDiff = Math.abs(this.player.x - this.player.originalX); // How far we're moving it left and right
+        if (this.player.y < 720 && xDiff < columnWidth * 1.4) {
             if (this.player.x < columnWidth) {
                 // First column!
                 this.grid.cards[0].highlighted = true;
