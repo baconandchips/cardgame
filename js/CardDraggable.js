@@ -7,7 +7,7 @@ export default class CardDraggable extends CardBase {
         let { onDragEnd } = data;
         super(data);
         this.originalX = this.x; // We get back to original place if we drag randomly or not to allowed location
-        this.originalY = this.originalY;
+        this.originalY = this.y;
         this.draggable = true;
         this.dragging = false; // We may want to keep track of when we're dragging card
         this.onDragEnd = onDragEnd;

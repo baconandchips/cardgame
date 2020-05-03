@@ -32,7 +32,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.bitmapFont('pressstart', 'assets/pressstart.png', 'assets/pressstart.fnt');
     }
     create() {
-        this.crid = new Grid({ scene: this, columns: 3, rows: 3 });
+        this.grid = new Grid({ scene: this, columns: 3, rows: 3 });
 
         this.player = new CardPlayer( {
             scene: this,
