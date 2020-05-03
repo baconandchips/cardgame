@@ -43,7 +43,11 @@ export default class MainScene extends Phaser.Scene {
             image: 'paladin',
             health: 16,
             depth: 1,
-            onDragEnd: (pointer, gameObject) => {},
+            onDragEnd: (pointer, gameObject) => {
+                // Snap back our original card!
+                this.player.x = this.player.originalX;
+                this.player.y = this.player.originalY;
+            },
         });
     }
 }
