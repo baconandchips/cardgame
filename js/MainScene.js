@@ -1,6 +1,7 @@
 import CardPlayer from '../js/CardPlayer.js';
 import CardGrid from './CardGrid.js';
 import Grid from './Grid.js';
+import { AddButtonRestart } from './ButtonRestart.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -54,6 +55,7 @@ export default class MainScene extends Phaser.Scene {
                         case 'attack':
                             this.player.attack(this.highlighted.value);
                             this.highlighted.dead = true;
+                            this.highlighted.deadAnimation();
                             break;
                         case 'heal':
                             this.player.health = Math.min(this.player.health + this.highlighted.value, this.player.maxHealth);
@@ -62,7 +64,12 @@ export default class MainScene extends Phaser.Scene {
                             this.player.armor = this.highlighted.value;
                             break;
                     }
-                    this.grid.fadeFrontRow();
+                    if (this.player.dead) {
+                        AddButtonRestart(this);
+                    } else {
+                        this.grid.fadeFrontRow();
+                    }
+                    
                 }
             },
         });
